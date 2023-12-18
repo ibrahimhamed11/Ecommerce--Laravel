@@ -15,8 +15,8 @@ class ProductController extends Controller
 {
     public function index()
     {
-        // Retrieve all products with associated user information
-        $products = Product::with('user')->get();
+        // Retrieve all products without the user information
+        $products = Product::select('id', 'name', 'quantity', 'image', 'user_id', 'created_at')->get();
         return response()->json($products);
     }
 
@@ -27,6 +27,10 @@ class ProductController extends Controller
         $product = Product::with('user')->findOrFail($id);
         return response()->json($product);
     }
+
+
+
+
     public function store(Request $request)
     {
         try {
@@ -66,19 +70,20 @@ class ProductController extends Controller
 
 
 
-
-
-
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
             'name' => 'required|string',
             'quantity' => 'required|integer',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'user_id' => ['required', 'exists:users,id', Rule::unique('products')->ignore($id)],
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $product = Product::findOrFail($id);
+
+        // Check if the authenticated user owns the product
+        if (Auth::id() !== $product->user_id) {
+            return response()->json(['error' => 'You do not have permission to update this product.'], 403);
+        }
 
         // Handle file upload for the update
         if ($request->hasFile('image')) {
@@ -93,26 +98,22 @@ class ProductController extends Controller
         return response()->json($product, 200);
     }
 
-    public function destroy($id)
+    public function delete($id)
     {
         $product = Product::findOrFail($id);
+
+        // Check if the authenticated user owns the product
+        if (Auth::id() !== $product->user_id) {
+            return response()->json(['error' => 'You do not have permission to delete this product.'], 403);
+        }
+
         $product->delete();
 
         return response()->json(null, 204);
     }
 
-
-
-
-
-
-    // app/Http/Controllers/ProductController.php
-
-public function create()
-{
-    return view('add-product');
-}
-
-
-
+    public function create()
+    {
+        return view('add-product');
+    }
 }
