@@ -11,7 +11,7 @@
     <div style="max-width: 600px; margin: auto; padding: 20px;">
         <h1 style="text-align: center; font-size: 24px; margin-bottom: 20px;">Add Product</h1>
 
-        <form method="post" action="{{ route('products.update', $id) }}" enctype="multipart/form-data">
+        <form method="post" action="{{ route('products.store') }}" enctype="multipart/form-data">
             @csrf
 
             <div style="margin-bottom: 15px;">
