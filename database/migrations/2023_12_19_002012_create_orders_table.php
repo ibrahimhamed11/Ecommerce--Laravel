@@ -9,15 +9,15 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id');
             $table->json('products');
-            $table->decimal('total_price', 10, 2);
-            $table->text('address');
+            $table->decimal('total_price', 8, 2);
+            $table->string('address');
+            $table->string('user_name'); // Add this line
             $table->string('user_email');
             $table->string('user_phone');
-            $table->enum('status', ['pending', 'completed'])->default('pending');
+            $table->string('status');
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

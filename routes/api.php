@@ -3,6 +3,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OrderController;
 
 // Public routes (outside the jwt.verify middleware group)
 Route::post('/login', [AuthController::class, 'login']);
@@ -24,4 +25,13 @@ Route::middleware(['jwt.verify'])->group(function () {
     Route::post('/products', [ProductController::class, 'store']);
     Route::put('/products/{id}', [ProductController::class, 'update']);
     Route::delete('/products/{id}', [ProductController::class, 'delete']);
+
+
+    //Orders Crud
+Route::post('/orders', [OrderController::class, 'addOrder']);
+Route::get('/orders/{id}', [OrderController::class, 'getOrder']);
+Route::delete('/orders/{id}', [OrderController::class, 'deleteOrder']);
+Route::patch('/orders/{', [OrderController::class, 'updateOrderStatus']);
+Route::get('/orders', [OrderController::class, 'getAllOrders']);
+
 });

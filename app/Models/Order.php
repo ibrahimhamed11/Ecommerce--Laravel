@@ -18,15 +18,13 @@ class Order extends Model
         'user_name',
         'user_email',
         'user_phone',
-        'created_at', // Note: 'created_at' and 'updated_at' are automatically managed by Eloquent
         'status',
     ];
 
     protected $casts = [
-        'products' => 'json', // Assuming 'products' is a JSON field
+        'products' => 'json',
     ];
 
-    // Define relationships if applicable
     public function user()
     {
         return $this->belongsTo(User::class);
