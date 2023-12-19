@@ -11,3 +11,17 @@ Route::get('/', function () {
 Route::resource('products', ProductController::class)->only(['create', 'store']);
 Route::get('/files', [FileController::class, 'browseFiles']);
 Route::get('/image/{filename}', [FileController::class, 'openImage']);
+
+
+
+// routes/web.php
+
+
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login');
+
+
+Route::get('/register', function () {
+    return view('user.register');
+})->name('login');
