@@ -20,6 +20,8 @@ class UserController extends Controller
                 'name' => $user->name,
                 'email' => $user->email,
                 'phone' => $user->phone,
+                'role' => $user->role,
+
                 'created_at' => $user->created_at->toDateTimeString(),
                 'updated_at' => $user->updated_at->toDateTimeString(),
             ];

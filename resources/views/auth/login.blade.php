@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -53,6 +52,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 <script>
+
     // inline script containing the login function
     function login() {
         const form = document.getElementById('loginForm');
@@ -89,7 +89,7 @@ localStorage.setItem('token', data.token);
 
                 // Successful login, redirect or handle as needed
                 confirm('Login successful');
-                 window.location.href = '/dashboard';
+                 window.location.href = '/admin';
             }
         })
         .catch(error => {
@@ -97,5 +97,8 @@ localStorage.setItem('token', data.token);
         });
     }
 </script>
+
+
+
 </body>
 </html>

@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use App\Events\NewOrderEvent;
 
 class OrderController extends Controller
 {
@@ -21,6 +22,9 @@ class OrderController extends Controller
         ]);
 
         $order = Order::create($validatedData);
+         broadcast(new NewOrderEvent($order));
+
+
 
         return response()->json(['message' => 'Order added successfully', 'data' => $order], 201);
     }

@@ -25,3 +25,10 @@ Route::get('/login', function () {
 Route::get('/register', function () {
     return view('user.register');
 })->name('login');
+
+
+Route::view('admin', 'admin');
+
+Route::view('orders', 'orders');
+
+Route::view('users', 'users');
