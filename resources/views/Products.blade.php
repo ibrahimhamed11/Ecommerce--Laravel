@@ -193,6 +193,14 @@ const monthNames = [
             document.getElementById('imageError').textContent = errors.image ? errors.image[0] : '';
         }
         refreshProductList();
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = "/login";
+        }
     </script>
+
+
+
 </body>
 </html>
