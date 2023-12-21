@@ -6,21 +6,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function all()
     {
         $products = Product::select('id', 'name', 'quantity', 'image', 'user_id', 'created_at')->get();
         return response()->json($products);
     }
 
 
-    public function show($id)
+    public function get($id)
     {
         $product = Product::select('id', 'name', 'quantity', 'image', 'user_id', 'created_at', 'updated_at')
             ->with(['user' => function ($query) {
@@ -37,10 +35,9 @@ class ProductController extends Controller
 
 
 
-    public function store(Request $request)
+    public function add(Request $request)
     {
         try {
-            // Validate request data
             $validatedData = $request->validate([
                 'name' => 'required|string',
                 'quantity' => 'required|integer',
@@ -51,30 +48,23 @@ class ProductController extends Controller
 if ($request->hasFile('image')) {
     $image = $request->file('image');
 
-    // Get the current timestamp as a unique identifier
     $timestamp = now()->timestamp;
 
-    // Combine the timestamp and the original file extension to create a unique image name
     $imageName = $timestamp . '_ product'.'.' . $image->getClientOriginalExtension();
-
-    // Save the image in the 'images' folder within the 'public' disk with the unique name
     $imagePath = $image->storeAs('uploads', $imageName, 'public');
-
     $request->image->move(public_path('images'), $imageName);
-
-    // Update the image path in the validated data
     $validatedData['image'] = $imagePath;
 }
 
+$userId = Auth::id();
 
             // Create a new product
             $product = Product::create([
                 'name' => $validatedData['name'],
                 'quantity' => $validatedData['quantity'],
                 'image' => $validatedData['image'] ?? null,
-                'user_id' => 3,
+                'user_id' => $userId,
             ]);
-
             return response()->json($product, 201);
         } catch (ValidationException $e) {
             return response()->json(['error' => $e->errors()], 422);

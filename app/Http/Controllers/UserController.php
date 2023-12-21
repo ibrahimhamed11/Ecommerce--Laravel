@@ -10,7 +10,7 @@ use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
-    public function index()
+    public function all()
     {
         $users = User::all();
 
@@ -83,7 +83,7 @@ class UserController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function delete($id)
     {
         $user = User::findOrFail($id);
         $user->delete();

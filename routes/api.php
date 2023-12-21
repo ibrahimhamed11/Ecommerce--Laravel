@@ -5,33 +5,31 @@ use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderController;
 
-// Public routes (outside the jwt.verify middleware group)
+// Public routes
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 
-// Protected routes with jwt.verify middleware
+// Protected routes  middleware
 Route::middleware(['jwt.verify'])->group(function () {
 
-    // User CRUD
-    Route::get('/users', [UserController::class, 'index']);
+    // User
+    Route::get('/users', [UserController::class, 'all']);
     Route::get('/users/{id}', [UserController::class, 'show']);
     Route::post('/users', [UserController::class, 'store']);
     Route::put('/users/{id}', [UserController::class, 'update']);
-    Route::delete('/users/{id}', [UserController::class, 'destroy']);
-
-    // Products CRUD
-    Route::get('/products', [ProductController::class, 'index']); // Use 'index' instead of 'add'
-    Route::get('/products/{id}', [ProductController::class, 'show']);
-    Route::post('/products', [ProductController::class, 'store']);
+    Route::delete('/users/{id}', [UserController::class, 'delete']);
+    // Products
+    Route::get('/products', [ProductController::class, 'all']);
+    Route::get('/products/{id}', [ProductController::class, 'get']);
+    Route::post('/products', [ProductController::class, 'add']);
     Route::put('/products/{id}', [ProductController::class, 'update']);
     Route::delete('/products/{id}', [ProductController::class, 'delete']);
 
-
-    //Orders Crud
-Route::post('/orders', [OrderController::class, 'addOrder']);
-Route::get('/orders/{id}', [OrderController::class, 'getOrder']);
-Route::delete('/orders/{id}', [OrderController::class, 'deleteOrder']);
-Route::patch('/orders/{', [OrderController::class, 'updateOrderStatus']);
-Route::get('/orders', [OrderController::class, 'getAllOrders']);
+    //Orders
+    Route::post('/orders', [OrderController::class, 'addOrder']);
+    Route::get('/orders/{id}', [OrderController::class, 'getOrder']);
+    Route::delete('/orders/{id}', [OrderController::class, 'deleteOrder']);
+    Route::patch('/orders/{', [OrderController::class, 'updateOrderStatus']);
+    Route::get('/orders', [OrderController::class, 'getAllOrders']);
 
 });
