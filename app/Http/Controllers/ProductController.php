@@ -106,7 +106,6 @@ $userId = Auth::id();
     }
 
 
-
     public function delete($id)
     {
         $product = Product::findOrFail($id);
@@ -118,8 +117,9 @@ $userId = Auth::id();
 
         $product->delete();
 
-        return response()->json(null, 204);
+        return response()->json(['message' => 'Product deleted successfully.'], 200);
     }
+
 
     public function create()
     {

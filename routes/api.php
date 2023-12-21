@@ -30,7 +30,7 @@ Route::middleware(['jwt.verify'])->group(function () {
     Route::post('/orders', [OrderController::class, 'addOrder']);
     Route::get('/orders/{id}', [OrderController::class, 'getOrder']);
     Route::delete('/orders/{id}', [OrderController::class, 'deleteOrder']);
-    Route::patch('/orders/{', [OrderController::class, 'updateOrderStatus']);
+    Route::patch('/orders/{id}', [OrderController::class, 'updateOrderStatus']);
     Route::get('/orders', [OrderController::class, 'getAllOrders']);
 
     //Cart
