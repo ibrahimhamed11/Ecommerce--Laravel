@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CartController;
 
 // Public routes
 Route::post('/login', [AuthController::class, 'login']);
@@ -31,5 +32,11 @@ Route::middleware(['jwt.verify'])->group(function () {
     Route::delete('/orders/{id}', [OrderController::class, 'deleteOrder']);
     Route::patch('/orders/{', [OrderController::class, 'updateOrderStatus']);
     Route::get('/orders', [OrderController::class, 'getAllOrders']);
+
+//Cart
+    Route::post('/cart', [CartController::class, 'addToCart']);
+    Route::get('/cart', [CartController::class, 'allInCart']);
+    Route::delete('/cart', [CartController::class, 'deleteFromCart']);
+    Route::get('/cart/user/{userId}', [CartController::class, 'getUserCart']);
 
 });
